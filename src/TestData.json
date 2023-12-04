@@ -1,0 +1,16 @@
+[
+	{
+		"id": 1,
+		"name": "John Doe",
+		"username": "Johndoe@kth.se", 
+		"age": 30,
+		"diagnosis": "Fever"
+	},
+	{
+		"id": 2,
+		"name": "Jane Smith",
+		"username": "Janesmith@kth.se",
+		"age": 25,
+		"diagnosis": "Headache"
+	}
+]
