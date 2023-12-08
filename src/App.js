@@ -7,6 +7,8 @@ import {Routes as Switch, Route} from 'react-router-dom';
 import Register from './pages/public/Register';
 import Login from './pages/public/Login';
 import Home from './pages/public/Home';
+import ImageEmployee from './pages/public/ImageEmployee';
+import ImagePatient from './pages/public/ImagePatient';
 import { AuthContextProvider } from './context/AuthContext';
 import { ToastContextProvider } from './context/ToastContext';
 import AllPatients from './pages/employee/AllPatients';
@@ -32,6 +34,9 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
+
+            <Route path="/imagePatient" element={<ImagePatient/>} />
+            <Route path="/imageEmployee" element={<ImageEmployee/>} />
 
             //Employee
             <Route element={<RequireAuth allowedRoles={"EMPLOYEE"}/>}>
