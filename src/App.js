@@ -23,6 +23,9 @@ import PatientNotes from "./pages/employee/PatientNotes";
 import MyNotes from "./pages/patient/MyNotes";
 import ActiveMessages from './pages/employee/ActiveMessages';
 import CreateEmployee from './pages/employee/CreateEmployee';
+import AllEmployees from './pages/employee/AllEmployees';
+import EmployeeInfo from './pages/employee/EmployeeInfo';
+import FutureEncounters from './pages/employee/FutureEncounters';
 
 function App() {
   return (
@@ -46,9 +49,10 @@ function App() {
               <Route path="/patient/:patientId/messages" element={<PatientMessages />} />
               <Route path="/messages/:messageId" element={<MessageDetails />} />
               <Route path="/patient/:patientId/notes" element={<PatientNotes />} />
-              <Route path="/employee" element={<CreateEmployee />} />
-              // patient Notes, en knapp "create note"
-              // note details
+              <Route path="/employees/all" element={<AllEmployees />} />
+              <Route path="/employee/:id" element={<EmployeeInfo />} />
+              <Route path="/employee/:employeeId/future-encounters" element={<FutureEncounters />} />
+              <Route path="/employees/create" element={<CreateEmployee />} />
             </Route>
 
             //Patient

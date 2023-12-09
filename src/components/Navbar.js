@@ -40,8 +40,8 @@ const Navbar = ({ title = "Patient Journal System" }) => {
                 {user.role === "EMPLOYEE" && (
                   <>
                   <li className="nav-item">
-                      <Link to="/employee" className="nav-link">
-                        Employee
+                      <Link to="/employees/all" className="nav-link">
+                        Employees
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -51,7 +51,7 @@ const Navbar = ({ title = "Patient Journal System" }) => {
                     </li>
                     <li className="nav-item">
                       <Link to="/patients/all" className="nav-link">
-                        All patients
+                        Patients
                       </Link>
                     </li>
                   </>

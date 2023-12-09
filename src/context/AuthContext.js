@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
       case 409:
         return "Already exists";
       default:
-        return "An error occurred";
+        return "An error occurred11";
     }
   };
 
@@ -75,12 +75,11 @@ export const AuthContextProvider = ({ children }) => {
 
         navigate(location.state?.from?.pathname || "/", { replace: true });
       } else {
-        const errorMessage = getErrorMessage(error.status);
+        const errorMessage = getErrorMessage(401);
         toast.error(errorMessage);
       }
     } catch (err) {
-      console.log(err);
-      toast.error("An error occurred");
+      toast.error(getErrorMessage(err.response.status));
     }
   };
 
@@ -96,12 +95,11 @@ export const AuthContextProvider = ({ children }) => {
 
         navigate("/", { replace: true });
       } else {
-        const errorMessage = getErrorMessage(error.status);
-        toast.error(errorMessage);
+        toast.error("An error occurred");
       }
     } catch (err) {
-      console.log(err);
-      toast.error("An error occurred");
+      const errorMessage = getErrorMessage(err.response.status);
+      toast.error(errorMessage);
     }
   };
 
@@ -115,9 +113,9 @@ export const AuthContextProvider = ({ children }) => {
         navigate("/login");
         toast.success("Logged out successfully");
       }
-    } catch (error) {
-      console.error("Error logging out:", error);
-      toast.error("An error occurred");
+    } catch (err) {
+      const errorMessage = getErrorMessage(err.response.status);
+      toast.error(errorMessage);
     }
   };
 

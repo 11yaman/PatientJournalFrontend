@@ -25,7 +25,7 @@ const Messages = () => {
       ) : (
         <div>
           {patientMessages.length === 0 ? (
-            <h3>No patientMessages for this patient</h3>
+            <h3>No messages for this patient</h3>
           ) : (
             <div>
               <table className="table table-hover">
