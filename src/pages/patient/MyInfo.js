@@ -41,6 +41,9 @@ const MyInfo = () => {
         <Link to={`/mymessages`} className="btn btn-info me-2">
           Messages
         </Link>
+        <Link to={`/myimages`} className="btn btn-info me-2">
+          Images
+        </Link>
       </div>
     </div>
   );

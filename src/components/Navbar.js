@@ -63,16 +63,6 @@ const Navbar = ({ title = "Patient Journal System" }) => {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link to="/imagePatient" className="nav-link">
-                    Patient Image
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/imageEmployee" className="nav-link">
-                    Employee Image
-                  </Link>
-                </li>
-                <li className="nav-item">
                   <Link to="/login" className="nav-link">
                     Login
                   </Link>

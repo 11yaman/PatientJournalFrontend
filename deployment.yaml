@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: react-app-depl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+      - name: react-app
+        image: yamanjkk/react-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-app-service
+spec:
+  type: NodePort
+  ports:
+  - name: react-app
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: react-app

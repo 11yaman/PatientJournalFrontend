@@ -31,6 +31,9 @@ const PatientInfo = () => {
         <Link to={`/patient/${id}/messages`} className="btn btn-info me-2">
           Messages
         </Link>
+        <Link to={`/patient/${id}/images`} className="btn btn-info me-2">
+          Images
+        </Link>
       </div>
     </div>
   );
