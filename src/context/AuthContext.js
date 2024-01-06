@@ -31,17 +31,27 @@ export const AuthContextProvider = ({ children }) => {
       case 409:
         return "Already exists";
       default:
-        return "An error occurred11";
+        return "An error occurred";
     }
   };
 
   const checkUserLoggedIn = async () => {
     try {
       const storedUser = JSON.parse(localStorage.getItem("user"));
-      if (storedUser) {
-        const result = await get("http://localhost:8081/api/v1/auth/info", storedUser.token);
+      if (storedUser && storedUser.token) {
+        const result = await get("http://vm.cloud.cbh.kth.se:2533/realms/fullstack/protocol/openid-connect/userinfo", storedUser.token);
 
         if (result) {
+          const filteredUser = {
+            role: getRoleFromRoles(result.realm_access.roles),
+            name: result.name,
+            username: result.preferred_username,
+            given_name: result.given_name,
+            family_name: result.family_name,
+            email: result.email,
+            token:storedUser.token
+          };
+
           if (
             location.pathname === "/login" ||
             location.pathname === "/register"
@@ -53,25 +63,42 @@ export const AuthContextProvider = ({ children }) => {
             navigate(location.pathname ? location.pathname : "/");
           }
           result.token = storedUser.token;
-          setUser(result);
+          localStorage.setItem("user", JSON.stringify(filteredUser));
+          setUser(filteredUser);
         } else {
           navigate("/login", { replace: true });
         }
+      } else {
+        navigate("/login", { replace: true });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const loginUser = async (userData) => {
+  const loginUser = async ({ username, password }) => {
     try {
-      const result = await post("http://localhost:8081/api/v1/auth/authenticate", userData);
+      const requestBody = {
+        client_id: "patient-system",
+        client_secret: "rs8f8zrvYixHAqH9RrlerYti2X4OA4By",
+        grant_type: "password",
+        username,
+        password,
+      };
+  
+      const result = await post("http://vm.cloud.cbh.kth.se:2533/realms/fullstack/protocol/openid-connect/token",
+        requestBody,
+        null,
+        {},
+        'application/x-www-form-urlencoded'
+      );
 
-      if (result) {
-        result.token = window.btoa(userData.email + ":" + userData.password);
-        localStorage.setItem("user", JSON.stringify(result));
-        setUser(result);
-        toast.success(`Logged in ${result.firstName}`);
+      if (result && result.access_token) {
+        localStorage.setItem("user", JSON.stringify({ token: result.access_token }));
+
+        setUser({ token: result.access_token }); 
+
+        toast.success(`Logged in`);
 
         navigate(location.state?.from?.pathname || "/", { replace: true });
       } else {
@@ -81,19 +108,20 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       toast.error(getErrorMessage(err.response.status));
     }
+    checkUserLoggedIn();
   };
 
+  //TODO move from here
   const registerPatient = async (userData) => {
     try {
       const result = await post("http://localhost:8083/api/v1/patients/register", userData);
 
       if (result) {
-        result.token = window.btoa(userData.email + ":" + userData.password);
         localStorage.setItem("user", JSON.stringify(result));
         setUser(result);
         toast.success("User registered successfully!");
 
-        navigate("/", { replace: true });
+        navigate("/login", { replace: true });
       } else {
         toast.error("An error occurred");
       }
@@ -107,7 +135,11 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const storedUser = JSON.parse(localStorage.getItem("user"));
       if (storedUser) {
-        await post("http://localhost:8081/api/v1/auth/logout", null, storedUser.token);
+        await post("http://vm.cloud.cbh.kth.se:2533/realms/fullstack/protocol/openid-connect/logout", 
+          null,
+          {},
+          'application/x-www-form-urlencoded'
+        );
         localStorage.removeItem("user");
         setUser(null);
         navigate("/login");
@@ -126,6 +158,18 @@ export const AuthContextProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+const getRoleFromRoles = (roles) => {
+  if (roles.includes("PATIENT")) {
+    return "PATIENT";
+  } else if (roles.includes("EMPLOYEE")) {
+    return "EMPLOYEE";
+  } else if (roles.includes("ADMIN")) {
+    return "ADMIN";
+  } else {
+    return null;
+  }
 };
 
 export default AuthContext;

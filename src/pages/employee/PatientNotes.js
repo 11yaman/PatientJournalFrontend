@@ -27,8 +27,13 @@ const Notes = () => {
           return;
         }
         try{
-          const result = await post(`http://localhost:8083/api/v1/patients/${patientId}/notes`, {text : text}, user.token);    
-          if (result) {
+            const result = await post(
+                `http://localhost:8083/api/v1/patients/notes?patientId=${patientId}`,
+                { text: text },
+                user.token,
+                { 'Content-Type': 'application/json' }
+              );
+            if (result) {
             toast.success('Note created successfully');
             setText("");
             

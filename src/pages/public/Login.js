@@ -29,7 +29,7 @@ const Login = () => {
       return;
     }
 
-    loginUser(credentials);
+    loginUser({ username: credentials.email, password: credentials.password });
   }
  
   return (

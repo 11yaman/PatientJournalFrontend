@@ -9,7 +9,7 @@ const MyInfo = () => {
 
   useEffect(() => {
     setPatient(user);
-  }, []); 
+  }, []);
 
   return (
     <div className="container mt-4">
@@ -19,7 +19,7 @@ const MyInfo = () => {
           <tbody>
             <tr>
               <td>Name:</td>
-              <td>{patient.firstName} {patient.lastName}</td>
+              <td>{patient.name}</td>
             </tr>
             <tr>
               <td>Username:</td>

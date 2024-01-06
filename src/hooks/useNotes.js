@@ -3,7 +3,7 @@ import useApi from './useApi';
 import useAuth from './useAuth';
 import { toast } from 'react-toastify';
 
-const useNotes = (patientId) => {
+const useNotes = (patientId, token) => {
   const { get, loading, error } = useApi();
   const [notes, setNotes] = useState([]);
 
@@ -12,8 +12,17 @@ const useNotes = (patientId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (user && user.token ) {
-          const fetchedNotes = await get(`http://localhost:8083/api/v1/patients/${patientId}/notes/list`, user.token);
+        if (user && user.token) {
+          let url = 'http://localhost:8083/api/v1/patients/notes/list';
+          
+          if (patientId !== null && patientId !== undefined) {
+              url += `?patientId=${patientId}`;
+          }
+  
+          const fetchedNotes = await get(
+              url,
+              user.token
+          );
 
           if (fetchedNotes) {
             setNotes(fetchedNotes);

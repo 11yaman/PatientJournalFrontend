@@ -7,7 +7,7 @@ import useMessages from "../../hooks/useMessages";
 const MyMessages = () => {
   const { user } = useAuth();
   
-  const { messages : myMessages, loading } = useMessages('patient', user.id); 
+  const { messages : myMessages, loading } = useMessages('patient', null); 
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {

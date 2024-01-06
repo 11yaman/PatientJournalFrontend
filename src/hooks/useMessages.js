@@ -17,15 +17,21 @@ const useMessages = (type, patientId) => {
         url = `http://localhost:8083/api/v1/messages/active`;
       } else if (type === 'archived') {
         url = ''; {/* not implemented yet */}
-      } else if (type === 'patient' && patientId) {
-        url = `http://localhost:8083/api/v1/patients/${patientId}/messages/list`;
+      } else if (type === 'patient') {
+        url = `http://localhost:8083/api/v1/patients/messages/list`;
+        if (patientId !== null && patientId !== undefined) {
+          url += `?patientId=${patientId}`;
+        }
       } else {
         toast.error('An error occured')
         return;
       }
       try {
         if (user && user.token ) {
-          const fetchedMessages = await get(url, user.token);
+          const fetchedMessages = await get(
+            url,
+            user.token
+        );
 
           if (fetchedMessages) {
             setMessages(fetchedMessages);

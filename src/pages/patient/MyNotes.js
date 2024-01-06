@@ -7,7 +7,7 @@ import useAuth from '../../hooks/useAuth';
 const NoteDetails = () => {
     const {user} = useAuth();
 
-    const { notes : myNotes, loading } = useNotes(user.id);
+    const { notes : myNotes, loading } = useNotes(null, user.token);
     const [notes, setMyNotes] = useState([]);
 
     useEffect(() => {
