@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const storedUser = JSON.parse(localStorage.getItem("user"));
       if (storedUser && storedUser.token) {
-        const result = await get("http://130.237.83.249:2533/realms/fullstack/protocol/openid-connect/userinfo", storedUser.token);
+        const result = await get("https://kc-proxy.vm-app.cloud.cbh.kth.se/realms/fullstack/protocol/openid-connect/userinfo", storedUser.token);
 
         if (result) {
           const filteredUser = {
@@ -86,7 +86,7 @@ export const AuthContextProvider = ({ children }) => {
         password,
       };
   
-      const result = await post("http://130.237.83.249:2533/realms/fullstack/protocol/openid-connect/token",
+      const result = await post("https://kc-proxy.vm-app.cloud.cbh.kth.se/realms/fullstack/protocol/openid-connect/token",
         requestBody,
         null,
         {},
@@ -135,7 +135,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const storedUser = JSON.parse(localStorage.getItem("user"));
       if (storedUser) {
-        await post("http://130.237.83.249:2533/realms/fullstack/protocol/openid-connect/logout", 
+        await post("https://kc-proxy.vm-app.cloud.cbh.kth.se/realms/fullstack/protocol/openid-connect/logout", 
           null,
           {},
           'application/x-www-form-urlencoded'
