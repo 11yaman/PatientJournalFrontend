@@ -49,7 +49,7 @@ const CreateEmployee = () => {
 
         try{
             const userData = { ...credentials, confirmPassword: undefined };
-            const result = await post("http://localhost:8082/api/v1/employees/create", userData, user.token);
+            const result = await post("https://employee-microservice.app.cloud.cbh.kth.se/api/v1/employees/create", userData, user.token);
 
             if (result) {
                 toast.success('New employee created');

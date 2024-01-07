@@ -14,7 +14,7 @@ const useEncounters = (employeeId) => {
       try {
         if (user && user.token) {
           const fetchedEncounters = await get(
-            `http://localhost:8082/api/v1/employees/${employeeId}/future_encounters`,
+            `https://employee-microservice.app.cloud.cbh.kth.se/api/v1/employees/${employeeId}/future_encounters`,
             user.token
           );
           if (fetchedEncounters) {
