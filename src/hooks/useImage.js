@@ -6,7 +6,7 @@ const useImage = (canvasRef) => {
 
   const searchImage = async (searchInput) => {
     try {
-      const response = await fetch(`http://vm.cloud.cbh.kth.se:2533/api/v1/image/${searchInput}`);
+      const response = await fetch(`https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/image/${searchInput}`);
       if (response.ok) {
         setImageName(searchInput);
         const blob = await response.blob();
@@ -29,7 +29,7 @@ const useImage = (canvasRef) => {
         const formData = new FormData();
         formData.append('image', blob, `${imageName}`);
 
-        const response = await fetch('http://vm.cloud.cbh.kth.se:2533/api/v1/upload', {
+        const response = await fetch('https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/upload', {
           method: 'POST',
           body: formData,
         });
