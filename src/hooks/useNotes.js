@@ -13,7 +13,7 @@ const useNotes = (patientId, token) => {
     const fetchData = async () => {
       try {
         if (user && user.token) {
-          let url = 'http://localhost:8083/api/v1/patients/notes/list';
+          let url = 'https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/patients/notes/list';
           
           if (patientId !== null && patientId !== undefined) {
               url += `?patientId=${patientId}`;

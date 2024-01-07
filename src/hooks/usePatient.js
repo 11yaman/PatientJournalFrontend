@@ -13,7 +13,7 @@ const usePatient = (patientId) => {
     const fetchPatient = async () => {
       try {
         if (user && user.token) {
-          const fetchedPatient = await get(`http://localhost:8083/api/v1/patients/${patientId}`, user.token);
+          const fetchedPatient = await get(`https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/patients/${patientId}`, user.token);
 
           if (fetchedPatient) {
             setPatient(fetchedPatient);

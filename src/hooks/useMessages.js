@@ -14,11 +14,11 @@ const useMessages = (type, patientId) => {
       let url;
 
       if (type === 'active') {
-        url = `http://localhost:8083/api/v1/messages/active`;
+        url = `https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/messages/active`;
       } else if (type === 'archived') {
         url = ''; {/* not implemented yet */}
       } else if (type === 'patient') {
-        url = `http://localhost:8083/api/v1/patients/messages/list`;
+        url = `https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/patients/messages/list`;
         if (patientId !== null && patientId !== undefined) {
           url += `?patientId=${patientId}`;
         }

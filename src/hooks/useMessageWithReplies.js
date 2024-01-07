@@ -13,7 +13,7 @@ const useMessageWithReplies = (messageId) => {
     const fetchData = async () => {
       try {
         if (user && user.token) {
-          const fetchedMessage = await get(`http://localhost:8083/api/v1/messages/${messageId}`, user.token);
+          const fetchedMessage = await get(`https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/messages/${messageId}`, user.token);
           if (fetchedMessage) {
             setMessage(fetchedMessage);
           } else {

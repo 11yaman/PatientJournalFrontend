@@ -28,7 +28,7 @@ const Notes = () => {
         }
         try{
             const result = await post(
-                `http://localhost:8083/api/v1/patients/notes?patientId=${patientId}`,
+                `https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/patients/notes?patientId=${patientId}`,
                 { text: text },
                 user.token,
                 { 'Content-Type': 'application/json' }

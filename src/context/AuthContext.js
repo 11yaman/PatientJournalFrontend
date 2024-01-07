@@ -114,7 +114,7 @@ export const AuthContextProvider = ({ children }) => {
   //TODO move from here
   const registerPatient = async (userData) => {
     try {
-      const result = await post("http://localhost:8083/api/v1/patients/register", userData);
+      const result = await post("https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/patients/register", userData);
 
       if (result) {
         localStorage.setItem("user", JSON.stringify(result));

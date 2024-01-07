@@ -22,7 +22,7 @@ const CreateMessage = () => {
     }
     try{
       console.log(user.token);
-      const result = await post("http://localhost:8083/api/v1/messages", {content: content}, user.token);
+      const result = await post("https://patient-resource-microservice.app.cloud.cbh.kth.se/api/v1/messages", {content: content}, user.token);
       console.log(result);
 
       if (result) {
