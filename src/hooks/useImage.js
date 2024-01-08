@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import useAuth from './useAuth';  // Assuming the correct path to useAuth
+
+const useApi = require('./useApi').default;  // Assuming the correct path to useApi
 
 const useImage = (canvasRef) => {
   const [imageBlob, setImageBlob] = useState(null);
   const [imageName, setImageName] = useState('');
+  const { user } = useAuth();
+  const { get, post } = useApi();  // Destructuring get and post from useApi
 
   const searchImage = async (searchInput) => {
     try {
-      const response = await fetch(`https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/image/${searchInput}`);
-      if (response.ok) {
+      if (user && user.token) {
+        const fetchedImage = await get(`https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/image/${searchInput}`, user.token);
+
         setImageName(searchInput);
-        const blob = await response.blob();
-        setImageBlob(blob);
+        setImageBlob(fetchedImage);
       } else {
-        throw new Error('Image not found');
+        throw new Error('User not authenticated');
       }
     } catch (error) {
       console.error('Something went wrong while fetching the image:', error);
@@ -29,16 +34,16 @@ const useImage = (canvasRef) => {
         const formData = new FormData();
         formData.append('image', blob, `${imageName}`);
 
-        const response = await fetch('https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/upload', {
-          method: 'POST',
-          body: formData,
-        });
+        if (user && user.token) {
+          const response = await post('https://patient-image-microservice.app.cloud.cbh.kth.se/api/v1/upload', formData, user.token, {}, 'multipart/form-data');
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Image uploaded successfully:', data);
+          if (response) {
+            console.log('Image uploaded successfully:', response);
+          } else {
+            throw new Error('Error uploading image');
+          }
         } else {
-          throw new Error('Error uploading image');
+          throw new Error('User not authenticated');
         }
       }
     } catch (error) {
