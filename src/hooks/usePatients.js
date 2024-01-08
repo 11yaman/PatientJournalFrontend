@@ -13,7 +13,7 @@ const usePatients = (searchQuery, searched) => {
     const fetchData = async () => {
       try {
         if (searched && user && user.token) {
-          const fetchedPatients = await get(`http://localhost:8085/api/v1/patients/search?q=${searchQuery}`, user.token);
+          const fetchedPatients = await get(`https://searching-microservice.app.cloud.cbh.kth.se/api/v1/patients/search?q=${searchQuery}`, user.token);
           if (fetchedPatients) {
             setPatients(fetchedPatients);
           } else {

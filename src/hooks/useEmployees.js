@@ -13,7 +13,7 @@ const useEmployees = (searchQuery, searched) => {
     const fetchData = async () => {
       try {
         if (searched && user && user.token) {
-          const fetchedEmployees = await get(`http://localhost:8085/api/v1/employees/search?q=${searchQuery}`, user.token);
+          const fetchedEmployees = await get(`https://searching-microservice.app.cloud.cbh.kth.se/api/v1/employees/search?q=${searchQuery}`, user.token);
           if (fetchedEmployees) {
             setEmployees(fetchedEmployees);
           } else {
